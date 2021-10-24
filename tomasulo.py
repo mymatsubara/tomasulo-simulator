@@ -29,6 +29,7 @@ def main():
         if instruction is None and len(instructions) > 0:
             instruction = instructions.pop(0)
             instruction = decode(instruction, instruction_id)
+            instruction.add_time(clock)
             instruction_id += 1
 
         if emission(rs, registers, config, instruction, clock, times):
@@ -89,7 +90,7 @@ def initialize_tables(config, instructions):
 
     # Cria tabela de usos das unidades funcionais
     fu_index = [f"{fu}{i}" for fu in config["fu"] for i in range(config["fu"][fu])]
-    fu = rs = pd.DataFrame({
+    fu = pd.DataFrame({
         "busy": [False for _ in range(len(fu_index))],
         "reservation_station": ["" for _ in range(len(fu_index))]
         },
