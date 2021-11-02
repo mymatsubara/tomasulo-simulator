@@ -64,7 +64,7 @@ def initialize_tables(config, instructions):
         "q_j": ["" for _ in range(rs_count)],
         "q_k": ["" for _ in range(rs_count)],
         "addr": [0 for _ in range(rs_count)],
-        "instruction_id": [0 for _ in range(rs_count)]
+        "instruction": ["" for _ in range(rs_count)]
         },
         index=[f"{fu}{i}" for fu in config["reservation-stations"] for i in range(config["reservation-stations"][fu])]
     )

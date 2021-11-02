@@ -5,11 +5,11 @@ def execution(reservation_stations, registers, config, cur_cycle, times, mem, fu
 
     Parâmetros:
         reservation_stations (pandas.DataFrame): tabela das reservation stations a ser atualizada. Exemplo:
-                    time   busy op  v_j  v_k q_j q_k  addr  instruction_id
-            load0      0  False  0    0    0   0   0     0               0
-            adder0     0  False  0    0    0   0   0     0               0
-            adder1     0  False  0    0    0   0   0     0               0
-            mult0      0  False  0    0    0   0   0     0               0
+                    time   busy op  v_j  v_k q_j q_k  addr  instruction
+            load0      0  False  0    0    0   0   0     0         None
+            adder0     0  False  0    0    0   0   0     0         None      
+            adder1     0  False  0    0    0   0   0     0         None      
+            mult0      0  False  0    0    0   0   0     0         None      
 
         registers: (pandas.DataFrame): tabela dos registradores a ser atualizada. Exemplo:
                 q_i  value
