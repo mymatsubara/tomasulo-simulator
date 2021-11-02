@@ -2,7 +2,7 @@
 Este é um simulador para instruções RISCV32I.
 
 ## Instalando as dependências
-Execute o seguinte comando para instalar as depedências do projeto:
+Execute o seguinte comando para instalar as depedências do projeto (lista de dependências no arquivo `requirements.txt`):
 
 ```sh
     $ pip install -r requirements.txt
@@ -23,3 +23,4 @@ Para executar o simulador, basta executar o seguinte comando:
 
 ## Implementação
 Foi considerado que o pipeline tem 4 estágios: decode, emission, execution e write. A implementação de cada um deles está presente na pasta `stages`.
+O arquivo `tomasulo.py` contém a implementação do loop principal do algoritmo, carregamento das configurações do simulador e é lá onde são instanciadas todas as tabelas utilizadas durante o algoritmo.
