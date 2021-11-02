@@ -6,18 +6,18 @@ beq	a4,a3,10572
 addi	sp,sp,-16
 jalr	a5
 auipc	ra,0x0
-jal	ra,1215a <atexit>
+jal	ra,1215a
 lui	a0,0x12
 sw	s0,8(sp)
 li	a5,0
-beqz	a5,10084 <register_fini+0x10>
-addi	a0,a0,1542 # 12606 <__libc_fini_array>
-j	1215a <atexit>
+beqz	a5,10084
+addi	a0,a0,1542
+j	1215a
 auipc	gp,0xf
-addi	gp,gp,1930 # 1f810 <__global_pointer$>
-addi	a0,gp,460 # 1f9dc <__malloc_max_total_mem>
-addi	a2,gp,552 # 1fa38 <__BSS_END__>
+addi	gp,gp,1930
+addi	a0,gp,460
+addi	a2,gp,552
 sub	a2,a2,a0
 li	a1,0
-jal	101b6 <memset>
+jal	101b6
 auipc	a0,0x2

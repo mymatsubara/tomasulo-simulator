@@ -17,7 +17,7 @@ def main():
 
     assembly_path = sys.argv[1]
     instructions = get_instructions_from(assembly_path)
-    registers, rs, mem, inst_queue, times, fu = initialize_tables(config, instructions)
+    registers, rs, mem, times, fu = initialize_tables(config, instructions)
     clock = 0
     instruction = None
     instruction_id = 0
@@ -75,9 +75,6 @@ def initialize_tables(config, instructions):
     # Cria array para memória
     mem = np.zeros(config["mem_size"], dtype=np.int32)
 
-    # Cria instruction queue
-    inst_queue = pd.Series(np.array(config["instruction_queue_size"], dtype=object)) 
-
     # Cria tabela de tempos para as instruções
     program_size = len(instructions)
     times = pd.DataFrame({
@@ -98,7 +95,7 @@ def initialize_tables(config, instructions):
         index=fu_index
     )
 
-    return registers, rs, mem, inst_queue, times, fu
+    return registers, rs, mem, times, fu
 
 def get_instructions_from(file_path):
     with open(file_path, "r") as f:
