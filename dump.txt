@@ -1,8 +1,9 @@
+lh	a3,12(s4)
+lh	a3,12(a3)
 add	a3,a3,a4
 slli	s7,s7,0x10
 lhu	a5,12(s4)
-lh	a3,12(s4)
-beq	a4,a3,10572
+beq	a4,a3,4
 addi	sp,sp,-16
 jalr	a5
 auipc	ra,0x0

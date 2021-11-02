@@ -11,8 +11,6 @@
         "adder": 3,
         "mult": 2
     },
-    "emission_time": 1,
-    "write_time": 1,
     "instructions_time": {
         "lui": 1,
         "auipc": 1,

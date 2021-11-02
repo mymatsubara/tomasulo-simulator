@@ -1,5 +1,5 @@
 def write(reservation_stations, registers, config, cur_cycle, times, mem, fu, reservation_station_completed):
-        '''
+    '''
     Escreve os resultados (atualiza a "mem" de acordo com a instrução concluída; atualiza a tabela "times"; para a instrução concluída atualiza a tabela "fu" para indicar que a unidade funcional está livre; remove a instrução da reservation station; escreve os resultados da instrução nos registradores)
 
     Parâmetros:
@@ -40,7 +40,31 @@ def write(reservation_stations, registers, config, cur_cycle, times, mem, fu, re
 
         reservation_station_completed (str): nome da reservation station cuja instrução foi concluída
     '''
+    
+    # Dados sobre a instrução que vai ser escrita
+    rs = reservation_stations.loc[reservation_station_completed]
+    instruction = rs.instruction
 
-    ##########################
-    ### Implementação aqui ###
-    ##########################
+    # Como a função write só executa quando uma instrução termina, não é necessário verificar o termino da instrução em questão. Além disso,
+    # como apenas uma instrução entra nesta função por ciclo, também não será necessário verificar se o CDB está livre.
+    if instruction.is_store() and rs.q_k == 0:
+        mem[rs.addr] = rs.v_k
+    else:
+        # Atualiza o valor Qi dos registradores
+        registers[registers["q_i"] == reservation_station_completed] = ["", rs.v_k]
+
+        # Atualiza o valor Qj das reservation stations
+        reservation_stations.loc[reservation_stations["q_j"] == reservation_station_completed, ["q_j", "v_j"]] = [0, rs.v_k]
+
+        # Atualiza o valor Qk das reservation stations
+        reservation_stations.loc[reservation_stations["q_k"] == reservation_station_completed, ["q_k", "v_k"]] = [0, rs.v_k]
+
+
+    # Marca a unidade funcional utilizada como livre
+    fu[fu["reservation_station"] == reservation_station_completed] = [False, ""]
+
+    # Atualiza a tabela de tempos para as instruções
+    times.loc[instruction.id, "write"] = cur_cycle + 1
+
+    # Limpa a reservation station
+    reservation_stations.loc[reservation_station_completed] = [0, False, 0, 0, 0, 0, 0, 0, 0]

@@ -23,3 +23,6 @@ class Instruction:
 
     def add_time(self, time):
         self.time = time
+
+    def is_store(self):
+        return self.uf == "load" and self.name[0] == "s"

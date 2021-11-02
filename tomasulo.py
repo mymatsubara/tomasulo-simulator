@@ -37,6 +37,13 @@ def main():
             instruction = None
 
         rs_completed = execution(rs, registers, config, clock, times, mem, fu)
+
+        # Teste
+        rs_completed = "load0"
+        rs.loc["load0"] = [0, True, "lh", 0, 100, 0, 0, 0, instruction]
+        rs.loc["load1"] = [1, True, "lh", 0, 0, "load0", 0, 0, decode(instructions[0], instruction_id)]
+        registers.loc["r13"] = ["load0", 0]
+
         if rs_completed:
             write(rs, registers, config, clock, times, mem, fu, rs_completed)
 
@@ -64,7 +71,7 @@ def initialize_tables(config, instructions):
         "q_j": ["" for _ in range(rs_count)],
         "q_k": ["" for _ in range(rs_count)],
         "addr": [0 for _ in range(rs_count)],
-        "instruction": ["" for _ in range(rs_count)]
+        "instruction": [None for _ in range(rs_count)]
         },
         index=[f"{fu}{i}" for fu in config["reservation-stations"] for i in range(config["reservation-stations"][fu])]
     )
