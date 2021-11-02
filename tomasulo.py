@@ -2,10 +2,10 @@ import pandas as pd
 import json
 import numpy as np
 import sys
-from decode import decode
-from emission import emission
-from execution import execution
-from write import write
+from stages.decode import decode
+from stages.emission import emission
+from stages.execution import execution
+from stages.write import write
 
 def main():
     
@@ -37,12 +37,6 @@ def main():
             instruction = None
 
         rs_completed = execution(rs, registers, config, clock, times, mem, fu)
-
-        # Teste
-        rs_completed = "load0"
-        rs.loc["load0"] = [0, True, "lh", 0, 100, 0, 0, 0, instruction]
-        rs.loc["load1"] = [1, True, "lh", 0, 0, "load0", 0, 0, decode(instructions[0], instruction_id)]
-        registers.loc["r13"] = ["load0", 0]
 
         if rs_completed:
             write(rs, registers, config, clock, times, mem, fu, rs_completed)
