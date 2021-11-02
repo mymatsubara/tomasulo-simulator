@@ -22,4 +22,4 @@ Para executar o simulador, basta executar o seguinte comando:
 ```
 
 ## Implementação
-Para o simulador foi considerado que o pipeline tem 4 estágios: decode, emission, execution e write. A implementação de cada um deles está presenta na pasta `stages`.
+Foi considerado que o pipeline tem 4 estágios: decode, emission, execution e write. A implementação de cada um deles está presente na pasta `stages`.
