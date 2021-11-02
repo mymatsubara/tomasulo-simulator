@@ -11,7 +11,7 @@ def decode(instruction, id):
     '''
 
     # Parse da instrução
-    splitted = re.split(r"[\s\t,()]", instruction)
+    splitted = list(filter(lambda s: s != "", re.split(r"[\s\t,()]", instruction)))
     name = splitted[0]
 
     # Formato e unidade funcional da instrução
@@ -22,9 +22,9 @@ def decode(instruction, id):
         print(f"AVISO: Instrução {name} não implementada ({id}:{instruction})")
         return None
 
-    rd = 0
-    rs1 = 0
-    rs2 = 0
+    rd = -1
+    rs1 = -1
+    rs2 = -1
     imm = 0
 
     # Exemplo: lui	a0,0x1f

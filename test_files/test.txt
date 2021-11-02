@@ -1,4 +1,4 @@
-addi    a3,a3,-16
-add	a3,a3,a4
-lw	a4,0(sp)
-sw  a4,0(sp)
+addi a3,a3,16
+add a3,a3,a3
+lw a4,0(sp)
+sw a4,0(sp)

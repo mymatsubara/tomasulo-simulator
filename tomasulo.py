@@ -22,8 +22,11 @@ def main():
     instruction = None
     instruction_id = 0
 
+    print("!!!!!!!!!!!!!!! INÍCIO DA SIMULAÇÃO !!!!!!!!!!!!!!!\n")
+
     # Enquanto existirem instruções para executar e se as reservation stations não estiverem vazias
-    while len(instructions) != 0 or len(rs[rs["busy"] == True]) != 0:        
+    while len(instructions) != 0 or len(rs[rs["busy"] == True]) != 0:
+        print(f"\n================== CICLO: {clock}==================")        
 
         # Caso um instrução foi emitida no ciclo anterior
         if instruction is None and len(instructions) > 0:
@@ -43,7 +46,9 @@ def main():
 
         clock += 1
 
-    
+    print(f"!!!!!!!!!!!!!!! FIM DA SIMULAÇÃO (CICLOS: {clock}) !!!!!!!!!!!!!!!\n")
+    print(f"TABELA DE TEMPOS:")
+    print(times)
     
 
 def initialize_tables(config, instructions):
