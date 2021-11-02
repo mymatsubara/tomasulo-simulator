@@ -29,8 +29,9 @@ def main():
         if instruction is None and len(instructions) > 0:
             instruction = instructions.pop(0)
             instruction = decode(instruction, instruction_id)
-            instruction.add_time(clock)
-            instruction_id += 1
+            if instruction is not None:
+                instruction.add_time(clock)
+                instruction_id += 1
 
         if emission(rs, registers, config, instruction, clock, times):
             instruction = None
