@@ -1,5 +1,5 @@
 # tomasulo-simulator
-Este é um simulador para instruções RISCV32I.
+Este é um simulador para instruções RISCV32I escrito em python.
 
 ## Instalando as dependências
 Execute o seguinte comando para instalar as depedências do projeto (lista de dependências no arquivo `requirements.txt`):
