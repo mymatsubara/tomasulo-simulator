@@ -54,11 +54,15 @@ def emission(reservation_stations, registers, config, instruction, cur_cycle, ti
     
     # Nome da reservation station livre na qual será alocada a instrução
     free_rs_name = free_rs[0]
+    print(f"Reservation station livre: {free_rs_name} -> Instrução emitida com sucesso.")
 
-    # Preenche colunas op, busy e time
+    # Preenche colunas op, busy, time e instruction
     reservation_stations.loc[free_rs_name, "op"] = instruction.name
     reservation_stations.loc[free_rs_name, "busy"] = True
     reservation_stations.loc[free_rs_name, "time"] = config["instructions_time"][instruction.name]
+    reservation_stations.loc[free_rs_name, "instruction"] = instruction
+
+    instruction.add_time(config["instructions_time"][instruction.name])
 
     # Se a instrução possui operando rs1
     if instruction.rs1 >= 0:
@@ -85,7 +89,10 @@ def emission(reservation_stations, registers, config, instruction, cur_cycle, ti
             # Atualiza os valores de Vk, Qk e addr
             reservation_stations.loc[free_rs_name, 'v_k'] = registers.loc[rt, 'value'] 
             reservation_stations.loc[free_rs_name, 'q_k'] = 0
-    
+    elif instruction.imm >= 0:
+        reservation_stations.loc[free_rs_name, 'v_k'] = instruction.imm
+        reservation_stations.loc[free_rs_name, 'q_k'] = 0
+
     # Se a instrução possui registrador de destino
     if instruction.rd >= 0:
         rd = f"r{instruction.rd}"
@@ -93,10 +100,5 @@ def emission(reservation_stations, registers, config, instruction, cur_cycle, ti
         
     # Atualiza tabela de tempos das instruções
     times.loc[instruction.id, "emission"] = cur_cycle + 1
-
-    print("INSTRUÇÃO EMITIDA\nRESERVATION STATIONS:")
-    print(reservation_stations)
-    print("\nREGISTRADORES:")
-    print(registers)
 
     return True

@@ -6,6 +6,8 @@ from stages.decode import decode
 from stages.emission import emission
 from stages.execution import execution
 from stages.write import write
+import warnings
+warnings.filterwarnings('ignore')
 
 def main():
     
@@ -22,18 +24,21 @@ def main():
     instruction = None
     instruction_id = 0
 
+    print("INSTRUÇÕES:")
+    print(f"- " + '\n- '.join(instructions) + "\n")
+
+
     print("!!!!!!!!!!!!!!! INÍCIO DA SIMULAÇÃO !!!!!!!!!!!!!!!\n")
 
     # Enquanto existirem instruções para executar e se as reservation stations não estiverem vazias
     while len(instructions) != 0 or len(rs[rs["busy"] == True]) != 0:
-        print(f"\n================== CICLO: {clock}==================")        
+        print(f"\n================== CICLO: {clock+1}==================")        
 
         # Caso um instrução foi emitida no ciclo anterior
         if instruction is None and len(instructions) > 0:
             instruction = instructions.pop(0)
             instruction = decode(instruction, instruction_id)
-            if instruction is not None:
-                instruction.add_time(clock)
+            if instruction is not None:                
                 instruction_id += 1
 
         if emission(rs, registers, config, instruction, clock, times):
@@ -44,9 +49,16 @@ def main():
         if rs_completed:
             write(rs, registers, config, clock, times, mem, fu, rs_completed)
 
+        print("INSTRUÇÃO EMITIDA\nRESERVATION STATIONS:")
+        print(rs.loc[:, rs.columns != "instruction"])
+        print("\nREGISTRADORES:")
+        print(registers)
+        print("\nUNIDADES FUNCIONAIS:")
+        print(fu)
+
         clock += 1
 
-    print(f"!!!!!!!!!!!!!!! FIM DA SIMULAÇÃO (CICLOS: {clock}) !!!!!!!!!!!!!!!\n")
+    print(f"!!!!!!!!!!!!!!! FIM DA SIMULAÇÃO (CICLOS: {clock+1}) !!!!!!!!!!!!!!!\n")
     print(f"TABELA DE TEMPOS:")
     print(times)
     

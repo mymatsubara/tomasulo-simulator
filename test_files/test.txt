@@ -1,4 +1,4 @@
 addi a3,a3,16
 add a3,a3,a3
+sw a3,0(sp)
 lw a4,0(sp)
-sw a4,0(sp)

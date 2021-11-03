@@ -40,16 +40,13 @@ def write(reservation_stations, registers, config, cur_cycle, times, mem, fu, re
 
         reservation_station_completed (str): nome da reservation station cuja instrução foi concluída
     '''
-    
     # Dados sobre a instrução que vai ser escrita
     rs = reservation_stations.loc[reservation_station_completed]
     instruction = rs.instruction
 
     # Como a função write só executa quando uma instrução termina, não é necessário verificar o termino da instrução em questão. Além disso,
     # como apenas uma instrução entra nesta função por ciclo, também não será necessário verificar se o CDB está livre.
-    if instruction.is_store() and rs.q_k == 0:
-        mem[rs.addr] = rs.v_k
-    else:
+    if not (instruction.is_store() and rs.q_k == 0):        
         # Atualiza o valor Qi dos registradores
         registers[registers["q_i"] == reservation_station_completed] = ["", rs.v_k]
 
@@ -60,11 +57,12 @@ def write(reservation_stations, registers, config, cur_cycle, times, mem, fu, re
         reservation_stations.loc[reservation_stations["q_k"] == reservation_station_completed, ["q_k", "v_k"]] = [0, rs.v_k]
 
 
+
     # Marca a unidade funcional utilizada como livre
     fu[fu["reservation_station"] == reservation_station_completed] = [False, ""]
 
     # Atualiza a tabela de tempos para as instruções
-    times.loc[instruction.id, "write"] = cur_cycle + 1
+    times.loc[instruction.id, "write"] = cur_cycle + 2
 
     # Limpa a reservation station
     reservation_stations.loc[reservation_station_completed] = [0, False, 0, 0, 0, 0, 0, 0, 0]

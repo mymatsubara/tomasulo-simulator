@@ -70,8 +70,6 @@ def decode(instruction, id):
 
     return Instruction(name, id, rd, rs1, rs2, inst["uf"], imm, inst["format"])
 
-
-
 _instructions = {
     "lui": {
         "format": InstructionFormat.RD_IMM,
@@ -117,7 +115,7 @@ _instructions = {
         "format": InstructionFormat.RS1_RS2_OFFSET,
         "uf": "add"
     },
-    "ld": {
+    "lb": {
         "format": InstructionFormat.RD_OFFSET_RS1,
         "uf": "load"
     },
